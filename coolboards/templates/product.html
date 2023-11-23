@@ -1,0 +1,212 @@
+{% extends "components/base.html" %} 
+{% block title %}{{ product.name }}{% endblock %} 
+{% block content %}
+<section class="py-5">
+  <div class="container">
+    <div
+      class="row"
+      style="max-width: 1152px; margin-right: auto; margin-left: auto"
+    >
+      <div class="col-md-6 col-xl-6">
+        <div
+          class="simple-slider"
+          style="margin-bottom: 16px; border-radius: 16px; overflow: hidden"
+        >
+          <div class="swiper-container">
+            <div class="swiper-wrapper">
+              <div
+                class="swiper-slide"
+              >
+                <img style="width: 100%" alt="{{main_photo.name}}" src="/media/{{main_photo.photo}}" />
+              </div>
+              {% for photo in photos %}
+              <div
+                class="swiper-slide"
+              >
+                <img style="width: 100%" alt="{{photo.name}}" src="/media/{{photo.photo}}" />
+              </div>
+              {% endfor %}
+            </div>
+            <div class="swiper-pagination"></div>
+            <div
+              class="swiper-button-prev"
+              style="color: var(--bs-emphasis-color)"
+            ></div>
+            <div
+              class="swiper-button-next"
+              style="color: var(--bs-emphasis-color)"
+            ></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-xl-6">
+        {% if product.new %}
+        <span
+          class="badge bg-dark"
+          style="margin-bottom: 16px; margin-right: 8px"
+          >NEW</span>
+        {% endif %}
+        {% if product.discount %}
+        <span class="badge bg-danger" style="margin-bottom: 16px">SALE</span>
+        {% endif %}
+        <a href="/products/{{ product.category.slug }}">
+          <h2 style="font-size: 20px">{{ product.category.name }}</h2>
+        </a>
+        <h1 style="font-weight: bold; margin-bottom: 16px">
+          {{ product.name }}
+        </h1>
+        <div class="row">
+          <div class="col">
+            <a href="/brand/{{ product.manufacturer.slug }}">
+              {% if product.manufacturer.photo %}
+              <img style="width: 48px; height: 48px; margin-right: 16px" alt="{{ product.manufacturer.name }} logo" src="/media/{{ product.manufacturer.photo }}" />
+              {% endif %}
+              <strong>
+              {{ product.manufacturer.name }}
+              </strong>
+              </a>
+          </div>
+        </div>
+        <hr />
+        {% if product.discount %}
+        <p
+          class="text-dark-emphasis"
+          style="
+            font-size: 18px;
+            margin-bottom: 0px;
+            color: var(--bs-gray-700);
+            text-decoration: line-through;
+            font-weight: bold;
+          "
+        >
+          {{product.discount}}&nbsp;₽
+        </p>
+        {% endif %}
+        <p style="font-size: 28px">{{product.price}}&nbsp;₽</p>
+        <div
+          class="btn-group"
+          style="border: 1px solid var(--bs-dark-bg-subtle)"
+        >
+          <button class="btn btn-light" type="button" onclick="cartMgr.removeItem({{ product.id }})" style="padding-right: 0;padding-left: 0;min-width: 40px;">-</button>
+          <input type="number" class="btn cart-item-quantity cb-quant-pick" value="0" min="0" data-item="{{ product.id }}">
+          <button class="btn btn-light" type="button" onclick="cartMgr.addItem({{ product.id }})" style="padding-right: 0;padding-left: 0;min-width: 40px;">+</button>
+        </div>
+        <div class="d-flex flex-wrap gap-2" style="margin-top: 22px">
+          <button
+            class="btn btn-primary text-center shadow d-flex align-items-center gap-2 add-to-cart"
+            type="button"
+            data-item="{{ product.id }}"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="1em"
+              height="1em"
+              fill="currentColor"
+              viewBox="0 0 16 16"
+              class="bi bi-cart-plus text-center"
+              style="display: flex"
+            >
+              <path
+                d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9V5.5z"
+                class="atc-plus"
+              ></path>
+              <path
+                d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"
+              ></path></svg>
+            <span class="caption">В корзину</span>
+            </button>
+            {% if item.compatibility %}
+          <button
+            class="btn btn-dark text-center shadow d-flex align-items-center gap-2 add-to-build"
+            type="button"
+            data-item="{{ product.id }}"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="1em"
+              height="1em"
+              fill="currentColor"
+              viewBox="0 0 16 16"
+              class="bi bi-wrench"
+              style="display: flex"
+            >
+              <path
+                d="M.102 2.223A3.004 3.004 0 0 0 3.78 5.897l6.341 6.252A3.003 3.003 0 0 0 13 16a3 3 0 1 0-.851-5.878L5.897 3.781A3.004 3.004 0 0 0 2.223.1l2.141 2.142L4 4l-1.757.364L.102 2.223zm13.37 9.019.528.026.287.445.445.287.026.529L15 13l-.242.471-.026.529-.445.287-.287.445-.529.026L13 15l-.471-.242-.529-.026-.287-.445-.445-.287-.026-.529L11 13l.242-.471.026-.529.445-.287.287-.445.529-.026L13 11l.471.242z"
+              ></path>
+            </svg>
+            <span class="caption">В сборку</span>
+          </button>
+          {% endif %}
+        </div>
+        
+      </div>
+    </div>
+    <p style="margin-top: 32px">
+      {{ product.description|safe }}
+    </p>
+    <hr />
+    <h2 style="margin-top: 32px">Отзывы</h2>
+    <form method="POST" action="/review/{{product.id}}">
+      <label>
+        Имя
+        <input
+          type="text"
+          name="user_name"
+          class="form-control"
+          style="margin-top: 8px"
+        />
+      </label>
+      <br />
+      <label>
+        Оценка
+        <select name="rating" class="form-control" style="margin-top: 8px">
+          <option value="1">1/5</option>
+          <option value="2">2/5</option>
+          <option value="3">3/5</option>
+          <option value="4">4/5</option>
+          <option value="5">5/5</option>
+        </select>
+      </label>
+      <br />
+      <label>
+        Отзыв
+        <textarea
+          name="text"
+          class="form-control"
+          style="margin-top: 8px"
+        ></textarea>
+      </label>
+      {% csrf_token %}
+      <br />
+      <button
+        type="submit"
+        class="btn btn-primary"
+        style="margin-top: 16px"
+      >
+        Отправить
+      </button>
+    </form>
+    <ul style="margin-top: 32px">
+       {%for review in reviews%}
+      <li>
+        <div class="row">
+          <div class="col">
+            <h5>{{review.user_name}}</h5>
+            <p>{{review.rating}}/5</p>
+          </div>
+          <div class="col">
+            <p style="text-align: right">{{review.created_at}}</p>
+          </div>
+        </div>
+        <p>{{review.text}}</p>
+      </li>
+      {%endfor%}
+      {% if reviews|length == 0 %}
+    <div class="col">
+        <h3 class="text-center">Отзывов на этот товар еще нет.</h3>
+    </div>
+  {% endif %}
+    </ul>
+  </div>
+</section>
+{% endblock %}

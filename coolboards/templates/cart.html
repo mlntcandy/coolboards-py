@@ -1,0 +1,68 @@
+{% extends "components/base.html" %} 
+{% block title %}Корзина{% endblock %} 
+{% block content %}
+<section class="py-5">
+    <div class="container py-5">
+        <div class="row mb-4 mb-lg-5">
+            <div class="col-md-8 col-xl-6 text-center mx-auto">
+                <h2 class="fw-bold">Корзина</h2>
+                {% comment %} <p class="text-muted">No matter the project, our team can handle it.&nbsp;</p> {% endcomment %}
+            </div>
+        </div>
+        <div class="row mx-auto">
+            <p class="text-muted text-center cb-cart-empty" style="{% if not cart_empty %}display:none;{% endif %}">Корзина пуста</p>
+            <table class="cb-cart" style="{% if cart_empty %}display:none;{% endif %}">
+                <tr>
+                    <th class="pb-4 ph">Фото</th>
+                    <th class="pb-4 nm">Название</th>
+                    <th class="pb-4 ct">Кол-во</th>
+                    <th class="pb-4 ps">Подытог</th>
+                </tr>
+                {% for item in items %}
+                    <tr data-item="{{item.id}}" class="item-cart-entry">
+                        <td class="ph">
+                            <a href="/i/{{item.id}}" style="color:initial;" class="col-1">
+                                <img src="/media/{{item.main_photo.photo}}" alt="{{item.name}}" class="cb-cart-image">
+                            </a>
+                        </td>
+                        <td class="nm">
+                            <div class="col">
+                                <a href="/i/{{item.id}}" style="color:initial;"><b>{{item.name}}</b></a>
+                                <p class="text-muted" style="margin:0"><strong class="cart-item-quantity" data-item="{{item.id}}">{{item.quantity}}</strong> x {{item.price}}&nbsp;₽</p>
+                            </div>
+                        </td>
+
+                        <td class="ct">
+                            <div class="btn-group" style="border: 1px solid var(--bs-dark-bg-subtle);">
+                                <button class="btn btn-light" type="button" onclick="cartMgr.removeItem({{ item.id }})" style="padding-right: 0;padding-left: 0;min-width: 40px;">-</button>
+                                <input type="number" class="btn cart-item-quantity cb-quant-pick" value="{{item.quantity}}" min="0" data-item="{{ item.id }}">
+                                <button class="btn btn-light" type="button" onclick="cartMgr.addItem({{ item.id }})" style="padding-right: 0;padding-left: 0;min-width: 40px;">+</button>
+                            </div>
+                        </td>
+                        
+                        <td class="ps">
+                            <div class="col">
+                                <span data-item="{{item.id}}" data-priceforone="{{item.price}}" class="cb-cart-itemsum">{{item.sum}}</span>&nbsp;₽
+                            </div>
+                        </td>
+
+                    </tr>
+                {% endfor %}
+            </table>
+            <div style="display:flex;justify-content:space-between;padding-right:0;padding-left:0;" class="mt-4">
+                <button class="btn btn-danger" onclick="cartMgr.clear()">Очистить корзину</button>
+                <div style="display:flex;align-items:center;">
+                    <p style="margin:0 16px 0 0">Итого: <strong class="cb-cart-total">{{total}}</strong>&nbsp;₽</p>
+                    <a href="/order" class="btn btn-primary">Оформить заказ</a>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</section>
+<script>
+const ITEM_PRICES = {
+    {% for item in items %}{{item.id}}: parseFloat("{{item.price}}".replace(",", ".")),{% endfor %}
+};
+</script>
+{% endblock %}

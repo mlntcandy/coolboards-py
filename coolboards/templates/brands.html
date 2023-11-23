@@ -1,0 +1,23 @@
+{% extends "components/base.html" %} 
+{% block title %}Бренды{% endblock %} 
+{% block content %}
+<section class="py-5">
+    <div class="container py-5">
+        <div class="row mb-4 mb-lg-5">
+            <div class="col-md-8 col-xl-6 text-center mx-auto">
+                <h1 class="fw-bold">Бренды</h1>
+                {% for manufacturer in manufacturers %}
+                <a href="/brand/{{ manufacturer.slug }}" style="display:flex;align-items:center;margin-bottom:16px">
+                    {% if manufacturer.photo %}
+                    <img style="width: 96px; height: 96px; margin-right: 16px" alt="{{ manufacturer.name }} logo" src="/media/{{ manufacturer.photo }}" />
+                    {% endif %}
+                    <strong class="h5" style="margin-bottom:0">
+                    {{ manufacturer.name }}
+                    </strong>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

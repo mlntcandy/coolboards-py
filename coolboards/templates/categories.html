@@ -1,0 +1,30 @@
+{% extends "components/base.html" %} 
+{% block title %}Категории{% endblock %} 
+{% block content %}
+<section class="py-5">
+  <div class="container">
+    <div
+      class="row"
+      style="max-width: 1152px; margin-right: auto; margin-left: auto"
+    >
+      <div class="col-12 text-center">
+        <h1 class="fw-bold">Категории</h1>
+        <p class="text-muted mb-5">Список категорий</p>
+      </div>
+    </div>
+    <div class="row mx-auto justify-content-center">
+      {% for category in categories %}
+      <div class="col" style="max-width: 200px;min-width: 200px;margin:0 16px 16px">
+          <a href="/products/{{ category.slug }}" style="color: initial"> 
+              <img class="shadow-sm cb-cl-image" src="/media/{{category.photo}}" alt="{{category.name}}">
+              <h3 class="mt-2 h4">{{ category.name }}</h3>
+              <p style="margin-bottom: 0; font-size: 14px">
+                {{category.description}}
+              </p>
+          </a>
+      </div>    
+      {% endfor %}
+  </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "components/base.html" %} 
+{% block title %}Главная{% endblock %} 
+{% block content %}
+<section class="py-5">
+  <div class="container">
+    {% if success %}
+    <h3>Ваш отзыв опубликован</h3>
+    <a href="/i/{{item_id}}">Вернуться к товару</a>
+    {% else %}
+    <h3>Ошибка при публикации отзыва</h3>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

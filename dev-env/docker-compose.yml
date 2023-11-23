@@ -1,0 +1,16 @@
+services:
+  mysql:
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=asDfas80085
+      - MYSQL_DATABASE=coolboards
+    ports:
+      - 3316:3306
+  pma:
+    image: phpmyadmin
+    ports:
+      - 8090:80
+    environment:
+      - PMA_HOST=mysql
+    depends_on:
+      - mysql

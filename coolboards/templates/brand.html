@@ -1,0 +1,18 @@
+{% extends "components/base.html" %} 
+{% block title %}Товары {{manufacturer.name}}{% endblock %} 
+{% block content %}
+<section class="py-5">
+    <div class="container py-5">
+        <div class="row mb-4 mb-lg-5">
+            <div class="col-md-8 col-xl-6 text-center mx-auto">
+                {% if manufacturer.photo %}
+                <img style="border-radius: 10px; width: 100px; height: 100px;" src="/media/{{manufacturer.photo}}" alt="{{manufacturer.name}} logo">
+                {% endif %}
+                <h2 class="fw-bold">{{manufacturer.name}}</h2>
+                <p class="text-muted">{{manufacturer.description}}</p>
+            </div>
+        </div>
+        {% include "components/itemlist.html" %}
+    </div>
+</section>
+{% endblock %}

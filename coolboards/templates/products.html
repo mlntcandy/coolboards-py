@@ -1,0 +1,15 @@
+{% extends "components/base.html" %} 
+{% block title %}{% if category %}{{category.name}}{% else %}Товары{% endif %}{% endblock %} 
+{% block content %}
+<section class="py-5">
+    <div class="container py-5">
+        <div class="row mb-4 mb-lg-5">
+            <div class="col-md-8 col-xl-6 text-center mx-auto">
+                <h2 class="fw-bold">{% if category %}{{category.name}}{% else %}Все товары{% endif %}</h2>
+                {% comment %} <p class="text-muted">No matter the project, our team can handle it.&nbsp;</p> {% endcomment %}
+            </div>
+        </div>
+        {% include "components/itemlist.html" %}
+    </div>
+</section>
+{% endblock %}

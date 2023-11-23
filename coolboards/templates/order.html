@@ -1,0 +1,79 @@
+{% extends "components/base.html" %} 
+{% block title %}Заказ{% endblock %} 
+{% block content %}
+    <style>
+        input {
+            margin-bottom: 10px;
+        }
+    </style>
+    <main class="col" style="margin: 0 auto;">
+        <h1>Оформление заказа</h1>
+        <h2>на сумму {{ total }} руб.</h2>
+        <form method="POST" action="/ordercomplete/">
+            <label>
+                Имя
+                <input type="text" name="first_name">
+            </label>
+            <br />
+            <label>
+                Фамилия
+                <input type="text" name="last_name">
+            </label>
+            <br />
+    
+            <label>
+                Телефон
+                <input type="tel" name="phone">
+            </label>
+            <br />
+            <label>
+                Email
+                <input type="email" name="email">
+            </label>
+            <br />
+            <label>
+                Комментарий к заказу
+                <input type="text" name="notes">
+            </label>
+            <br />
+            
+            Метод доставки
+            <br />
+            <label>
+                <input type="radio" name="delivery_method" value="courier">
+                Курьером
+            </label>
+            <br />
+            <label>
+                <input type="radio" name="delivery_method" value="parcel">
+                Почтой
+            </label>
+            <br />
+            <label>
+                <input type="radio" name="delivery_method" value="pickup">
+                Самовывоз
+            </label>
+            <br />
+    
+            Метод оплаты
+            <br />
+            <label>
+                <input type="radio" name="payment_method" value="on_pickup">
+                При получении
+            </label>
+            <br />
+            <label>
+                <input type="radio" name="payment_method" value="online">
+                Онлайн
+            </label>
+            <br />
+            <label>
+                Адрес доставки
+                <input type="text" name="delivery_address">
+            </label>
+            <br />
+            {% csrf_token %}
+            <button type="submit">Оформить</button>
+        </form>
+    </main>
+{% endblock %}

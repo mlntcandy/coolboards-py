@@ -1,0 +1,9 @@
+{% extends "components/base.html" %} 
+{% block title %}Заказ{% endblock %} 
+{% block content %}
+    {%if success%}
+    <h1>Заказ №{{ order.id }} зарегистрирован</h1>
+    {% else %}
+    <h1>Заказ не зарегистрирован</h1>
+    {% endif %}
+{% endblock %}

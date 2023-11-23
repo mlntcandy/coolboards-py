@@ -1,0 +1,127 @@
+<div class="row mx-auto">
+  {% for item in items %}
+  <div
+    class="col"
+    style="max-width: 350px; min-width: 300px; margin-bottom: 16px"
+  >
+    <a href="/i/{{ item.id }}" style="color: initial">
+      <img
+        class="shadow-sm cb-il-image"
+        src="/media/{{item.main_photo.photo}}"
+        alt="{{item.main_photo.name}}"
+      />
+
+      {% if item.new %}
+      <span
+        class="badge bg-dark"
+        style="margin-bottom: 0; margin-right: 8px; margin-top: 16px"
+        >NEW</span
+      >
+      {% endif %}
+
+      <h6 style="font-weight: bold; margin-top: 16px">
+        {{ item.manufacturer.name }}
+      </h6>
+      <h3>{{ item.name }}</h3>
+
+      <div class="d-flex gap-2 align-items-center" style="margin-bottom: 16px">
+          {% if item.discount %}
+        <span class="badge bg-danger">SALE</span>
+        <p
+          class="fw-semibold"
+          style="
+            margin-bottom: 0;
+            color: var(--bs-dark-text-emphasis);
+            text-decoration: line-through;
+          "
+        >
+          {{item.discount}}&nbsp;<strong>₽</strong>
+        </p>
+        {% endif %}
+
+        <p class="fw-semibold" style="margin-bottom: 0">
+          <strong>{{item.price}}&nbsp;₽</strong>
+        </p>
+      </div>
+    </a>
+    <div class="d-flex gap-2">
+      <button
+        class="btn btn-primary btn-sm shadow add-to-cart"
+        type="button"
+        style="padding: 0; padding-right: 14px; padding-left: 14px"
+        data-item="{{ item.id }}"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="1em"
+          height="1em"
+          fill="currentColor"
+          viewBox="0 0 16 16"
+          class="bi bi-cart-plus"
+          style="font-size: 20px"
+        >
+          <path
+            class="atc-plus"
+            d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9V5.5z"
+          ></path>
+          <path
+            d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"
+          ></path>
+        </svg>
+      </button>
+      {% comment %} {% if item.compatibility %}
+      <button
+        class="btn btn-dark btn-sm shadow add-to-build"
+        type="button"
+        style="padding: 0; padding-right: 14px; padding-left: 14px"
+        data-item="{{ item.id }}"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="1em"
+          height="1em"
+          fill="currentColor"
+          viewBox="0 0 16 16"
+          class="bi bi-wrench"
+          style="font-size: 20px; display: flex"
+        >
+          <path
+            d="M.102 2.223A3.004 3.004 0 0 0 3.78 5.897l6.341 6.252A3.003 3.003 0 0 0 13 16a3 3 0 1 0-.851-5.878L5.897 3.781A3.004 3.004 0 0 0 2.223.1l2.141 2.142L4 4l-1.757.364L.102 2.223zm13.37 9.019.528.026.287.445.445.287.026.529L15 13l-.242.471-.026.529-.445.287-.287.445-.529.026L13 15l-.471-.242-.529-.026-.287-.445-.445-.287-.026-.529L11 13l.242-.471.026-.529.445-.287.287-.445.529-.026L13 11l.471.242z"
+          ></path>
+        </svg>
+      </button>
+      {% endif %} {% endcomment %}
+      <div class="btn-group" style="border: 1px solid var(--bs-dark-bg-subtle)">
+        <button
+          class="btn btn-light"
+          type="button"
+          onclick="cartMgr.removeItem({{ item.id }})"
+          style="padding-right: 0; padding-left: 0; min-width: 40px"
+        >
+          -
+        </button>
+        <input
+          type="number"
+          class="btn cart-item-quantity cb-quant-pick"
+          value="0"
+          min="0"
+          data-item="{{ item.id }}"
+        />
+        <button
+          class="btn btn-light"
+          type="button"
+          onclick="cartMgr.addItem({{ item.id }})"
+          style="padding-right: 0; padding-left: 0; min-width: 40px"
+        >
+          +
+        </button>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+  {% if items|length == 0 %}
+    <div class="col">
+        <h3 class="text-center">Товаров не найдено</h3>
+    </div>
+  {% endif %}
+</div>
