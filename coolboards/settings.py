@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "coolboards",
     "drf_api",
     "rest_framework",
+    "simple_history",
 ]
 
 MIDDLEWARE = [
@@ -52,6 +53,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     # "rest_framework.middleware.AuthenticationMiddleware",
     # "rest_framework.middleware.AuthorizationMiddleware",
+    "simple_history.middleware.HistoryRequestMiddleware",
 ]
 
 ROOT_URLCONF = "coolboards.urls"

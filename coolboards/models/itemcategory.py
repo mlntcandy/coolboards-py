@@ -1,8 +1,12 @@
 from django.contrib import admin
 from django.db import models
+from simple_history.models import HistoricalRecords
+from simple_history.admin import SimpleHistoryAdmin
 
 
 class ItemCategory(models.Model):
+    history = HistoricalRecords()
+
     photo = models.ImageField(upload_to="categories/", null=True, verbose_name="Фото")
 
     name = models.TextField(verbose_name="Название")
@@ -23,7 +27,7 @@ class ItemCategory(models.Model):
 
 
 @admin.register(ItemCategory)
-class ItemCategoryAdmin(admin.ModelAdmin):
+class ItemCategoryAdmin(SimpleHistoryAdmin):
     list_display = ["name", "slug", "get_item_count"]
     list_display_links = ["name", "slug"]
     search_fields = ["name", "slug"]

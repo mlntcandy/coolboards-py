@@ -1,8 +1,12 @@
 from django.contrib import admin
 from django.db import models
+from simple_history.models import HistoricalRecords
+from simple_history.admin import SimpleHistoryAdmin
 
 
 class Manufacturer(models.Model):
+    history = HistoricalRecords()
+
     photo = models.ImageField(
         upload_to="manufacturers/", null=True, verbose_name="Фото"
     )
@@ -20,7 +24,7 @@ class Manufacturer(models.Model):
 
 
 @admin.register(Manufacturer)
-class ManufacturerAdmin(admin.ModelAdmin):
+class ManufacturerAdmin(SimpleHistoryAdmin):
     list_display = ["name", "slug"]
     list_display_links = ["name", "slug"]
     search_fields = ["name", "slug"]

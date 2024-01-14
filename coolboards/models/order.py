@@ -3,6 +3,9 @@ from django.db import models
 from .item import Item
 from .orderitem import OrderItem
 
+from simple_history.models import HistoricalRecords
+from simple_history.admin import SimpleHistoryAdmin
+
 
 class PaymentMethodChoices(models.TextChoices):
     ON_PICKUP = "P", "pickup"
@@ -30,6 +33,8 @@ class OrderItemInline(admin.TabularInline):
 
 
 class Order(models.Model):
+    history = HistoricalRecords()
+
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
 
     first_name = models.CharField(max_length=128, verbose_name="Имя")
@@ -66,7 +71,7 @@ class Order(models.Model):
 
 
 @admin.register(Order)
-class OrderAdmin(admin.ModelAdmin):
+class OrderAdmin(SimpleHistoryAdmin):
     list_display = [
         "id",
         "created_at",

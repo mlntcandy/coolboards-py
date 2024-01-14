@@ -7,8 +7,13 @@ from .itemphoto import ItemPhoto
 
 from coolboards.lib.build import compatible_categories
 
+from simple_history.models import HistoricalRecords
+from simple_history.admin import SimpleHistoryAdmin
+
 
 class Item(models.Model):
+    history = HistoricalRecords()
+
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
 
     name = models.TextField(verbose_name="Название")
@@ -47,7 +52,7 @@ class Item(models.Model):
 
 
 @admin.register(Item)
-class ItemAdmin(admin.ModelAdmin):
+class ItemAdmin(SimpleHistoryAdmin):
     list_display = [
         "id",
         "name",
