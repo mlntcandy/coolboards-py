@@ -16,19 +16,3 @@ class Review(models.Model):
     class Meta:
         verbose_name = "Отзыв"
         verbose_name_plural = "Отзывы"
-
-
-@admin.register(Review)
-class ReviewAdmin(admin.ModelAdmin):
-    list_display = [
-        "id",
-        "created_at",
-        "user_name",
-        "rating",
-        "text",
-        "item",
-    ]
-
-    list_filter = ["created_at", "rating"]
-    date_hierarchy = "created_at"
-    search_fields = ["user_name", "text"]

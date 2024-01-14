@@ -20,10 +20,3 @@ class ItemPhoto(models.Model):
     class Meta:
         verbose_name = "Фотография товара"
         verbose_name_plural = "Фотографии товаров"
-
-
-@admin.register(ItemPhoto)
-class ItemPhotoAdmin(admin.ModelAdmin):
-    list_display = ["name", "get_item", "added_at", "main"]
-    list_filter = ["added_at", "main"]
-    date_hierarchy = "added_at"

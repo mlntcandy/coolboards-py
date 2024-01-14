@@ -21,10 +21,3 @@ class Manufacturer(models.Model):
     class Meta:
         verbose_name = "Производитель"
         verbose_name_plural = "Производители"
-
-
-@admin.register(Manufacturer)
-class ManufacturerAdmin(SimpleHistoryAdmin):
-    list_display = ["name", "slug"]
-    list_display_links = ["name", "slug"]
-    search_fields = ["name", "slug"]

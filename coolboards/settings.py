@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "drf_api",
     "rest_framework",
     "simple_history",
+    "import_export",
 ]
 
 MIDDLEWARE = [

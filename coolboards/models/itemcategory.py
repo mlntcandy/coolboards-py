@@ -24,10 +24,3 @@ class ItemCategory(models.Model):
     class Meta:
         verbose_name = "Категория товара"
         verbose_name_plural = "Категории товаров"
-
-
-@admin.register(ItemCategory)
-class ItemCategoryAdmin(SimpleHistoryAdmin):
-    list_display = ["name", "slug", "get_item_count"]
-    list_display_links = ["name", "slug"]
-    search_fields = ["name", "slug"]

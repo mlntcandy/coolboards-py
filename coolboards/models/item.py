@@ -9,6 +9,8 @@ from coolboards.lib.build import compatible_categories
 
 from simple_history.models import HistoricalRecords
 from simple_history.admin import SimpleHistoryAdmin
+from import_export import resources
+from import_export.admin import ImportExportModelAdmin
 
 
 class Item(models.Model):
@@ -49,22 +51,3 @@ class Item(models.Model):
     class Meta:
         verbose_name = "Товар"
         verbose_name_plural = "Товары"
-
-
-@admin.register(Item)
-class ItemAdmin(SimpleHistoryAdmin):
-    list_display = [
-        "id",
-        "name",
-        "manufacturer",
-        "category",
-        "price",
-        "discount",
-        "stock",
-    ]
-    list_filter = ["created_at", "new", "category"]
-    date_hierarchy = "created_at"
-    filter_horizontal = ["photos"]
-    search_fields = ["name", "description"]
-    raw_id_fields = ["manufacturer"]
-    list_display_links = ["id", "name"]

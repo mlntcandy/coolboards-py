@@ -68,37 +68,3 @@ class Order(models.Model):
     class Meta:
         verbose_name = "Заказ"
         verbose_name_plural = "Заказы"
-
-
-@admin.register(Order)
-class OrderAdmin(SimpleHistoryAdmin):
-    list_display = [
-        "id",
-        "created_at",
-        "first_name",
-        "last_name",
-        "phone",
-        "email",
-        "notes",
-        "payment_complete",
-        "payment_amount",
-        "payment_method",
-        "order_status",
-        "delivery_method",
-        "delivery_address",
-        "getItems",
-    ]
-
-    def getItems(self, obj):
-        items = []
-        for order_item in obj.orderitem_set.all():
-            item_name = order_item.item.name
-            item_quantity = order_item.quantity
-            items.append(f"{item_quantity}x {item_name}")
-        return ";\n".join(items)
-
-    list_filter = ("created_at", "order_status", "payment_complete")
-    inlines = [OrderItemInline]
-    date_hierarchy = "created_at"
-    readonly_fields = ["created_at", "items"]
-    search_fields = ["first_name", "last_name", "phone", "email", "notes", "id"]
