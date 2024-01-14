@@ -84,7 +84,7 @@ DATABASES = {
         "NAME": "coolboards",
         "USER": "root",
         "PASSWORD": "asDfas80085",
-        "HOST": "192.168.1.11",
+        "HOST": "clubhouse.mlntcandy.com",
         "PORT": "3316",
     }
 }

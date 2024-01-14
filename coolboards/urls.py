@@ -19,13 +19,13 @@ from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
 import coolboards.views as views
+from drf_api.urls import urlpatterns as drf_urls
 
 admin.site.site_header = "Coolboards Admin"
 
 urlpatterns = (
-    [
-        # rest-framework
-        path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
+    drf_urls
+    + [
         # admin page
         path("admin/", admin.site.urls),
         # home page
