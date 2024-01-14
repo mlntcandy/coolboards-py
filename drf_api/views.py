@@ -10,6 +10,7 @@ from rest_framework.decorators import action
 from rest_framework.pagination import PageNumberPagination
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets
+from django.db.models import Q
 
 
 class MyPagination(PageNumberPagination):
@@ -88,6 +89,19 @@ class ItemViewSet(viewsets.ModelViewSet):
         serializer = ReviewSerializer(reviews, many=True)
         return Response(serializer.data)
 
+    @action(detail=False, methods=["get"])
+    def deals(self, request):
+        """
+        Get items with discount or new items
+        """
+        deals = Item.objects.filter(Q(new=True) | ~Q(discount=0) & ~Q(stock=0))
+        page = self.paginate_queryset(deals)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+        serializer = self.get_serializer(deals, many=True)
+        return Response(serializer.data)
+
 
 class ReviewViewSet(viewsets.ModelViewSet):
     """
@@ -104,3 +118,18 @@ class ReviewViewSet(viewsets.ModelViewSet):
         if item is not None:
             queryset = Review.objects.filter(item=item)
         return queryset
+
+    @action(detail=False, methods=["get"])
+    def invalid(self, request):
+        """
+        Get invalid reviews
+        """
+        invalid = Review.objects.filter(
+            ~(Q(rating__gte=1) & Q(rating__lte=5)) | Q(text="")
+        )
+        page = self.paginate_queryset(invalid)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+        serializer = self.get_serializer(invalid, many=True)
+        return Response(serializer.data)
